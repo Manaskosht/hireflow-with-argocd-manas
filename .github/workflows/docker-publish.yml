@@ -17,7 +17,7 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_OWNER: Manaskosht
+  IMAGE_OWNER: manaskosht
 
 jobs:
   docker:
