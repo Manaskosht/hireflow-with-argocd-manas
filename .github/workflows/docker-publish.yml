@@ -1,4 +1,3 @@
-```yaml
 name: Build Push and Deploy
 
 on:
@@ -270,4 +269,3 @@ jobs:
 
           echo ""
           echo "Rollback is possible by reverting the GitOps commit."
-```
