@@ -168,20 +168,41 @@ jobs:
       # ==========================================
 
       - name: Update backend image
+        working-directory: gitops
         run: |
-          sed -i \
-            "s|image: ghcr.io/manaskosht/hireflow-backend:.*|image: ghcr.io/manaskosht/hireflow-backend:${{ needs.docker.outputs.build_tag }}|" \
-            gitops/k8s/backend-deployment.yaml
+          sed -i -E \
+            "s|^([[:space:]]*)image:[[:space:]]*ghcr\.io/[^[:space:]]+/hireflow-backend:[^[:space:]]+|\1image: ghcr.io/manaskosht/hireflow-backend:${{ needs.docker.outputs.build_tag }}|" \
+            k8s/backend-deployment.yaml
 
       # ==========================================
       # UPDATE FRONTEND IMAGE
       # ==========================================
 
       - name: Update frontend image
+        working-directory: gitops
         run: |
-          sed -i \
-            "s|image: ghcr.io/manaskosht/hireflow-frontend:.*|image: ghcr.io/manaskosht/hireflow-frontend:${{ needs.docker.outputs.build_tag }}|" \
-            gitops/k8s/frontend-deployment.yaml
+          sed -i -E \
+            "s|^([[:space:]]*)image:[[:space:]]*ghcr\.io/[^[:space:]]+/hireflow-frontend:[^[:space:]]+|\1image: ghcr.io/manaskosht/hireflow-frontend:${{ needs.docker.outputs.build_tag }}|" \
+            k8s/frontend-deployment.yaml
+
+      # ==========================================
+      # VERIFY IMAGES
+      # ==========================================
+
+      - name: Verify updated images
+        working-directory: gitops
+        run: |
+          echo "============================================"
+          echo "UPDATED IMAGES"
+          echo "============================================"
+
+          echo ""
+          echo "Backend:"
+          grep "image:" k8s/backend-deployment.yaml
+
+          echo ""
+          echo "Frontend:"
+          grep "image:" k8s/frontend-deployment.yaml
 
       # ==========================================
       # SHOW CHANGES
@@ -190,7 +211,13 @@ jobs:
       - name: Show GitOps changes
         working-directory: gitops
         run: |
-          git diff
+          echo "============================================"
+          echo "GIT DIFF"
+          echo "============================================"
+
+          git diff -- \
+            k8s/backend-deployment.yaml \
+            k8s/frontend-deployment.yaml
 
       # ==========================================
       # COMMIT CHANGES
