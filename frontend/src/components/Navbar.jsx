@@ -127,7 +127,7 @@ function Navbar() {
                   : "text-slate-400 hover:bg-white/[0.05] hover:text-white"
               }`}
             >
-              For teams
+              For teams11111111111111111111111111111111111111111
             </Link>
 
             <Link
