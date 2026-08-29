@@ -20,7 +20,7 @@ env:
   IMAGE_OWNER: manaskosht
 
   # GitOps Repository
-  GITOPS_REPO: manaskosht/hireflow-gitop
+  GITOPS_REPO: manaskosht/hireflow-gitops
 
   # GHCR Images
   BACKEND_IMAGE: ghcr.io/manaskosht/hireflow-backend
